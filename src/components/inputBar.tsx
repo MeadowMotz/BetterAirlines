@@ -118,8 +118,8 @@ const InputBar = () => {
                   className="calendar-container"
                   style={{
                     position: "absolute",
-                    top: `${getRectanglePosition(index) + 10}px`, // Adjusted position to be below the rectangle
-                    left: `${rectangleRefs.current[index]?.getBoundingClientRect().left}px`,
+                    top: `${getRectanglePosition(index) -50}px`, // Adjusted position to be below the rectangle
+                    left: `${getRectanglePosition(index)-50}px`,
                     zIndex: 999,
                   }}
                 >
