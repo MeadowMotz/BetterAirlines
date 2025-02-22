@@ -1,9 +1,11 @@
-import React from "react";
+import InputBar from "./inputBar";
 
 const Home = () => {
   return (
     <div>
-        <p>home components</p>
+        <h1>Better Airlines</h1>
+        <img className="logo" src="src\assets\logo.png" alt="Better Airlines Logo" />
+        <InputBar/>
     </div>
   );
 };
