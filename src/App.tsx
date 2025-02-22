@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./components/home";
-import Airlines from "./components/airlines";
 import Testing from "./components/testing";
+
 // import Profile from "./components/ai/profile";import Results from "./components/Results"; // Import Results component
 
 

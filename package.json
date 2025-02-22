@@ -13,10 +13,12 @@
     "axios": "^1.7.9",
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.7",
+    "firebase": "^11.3.1",
     "openai": "^4.85.3",
     "react": "^19.0.0",
     "react-datepicker": "^8.1.0",
     "react-dom": "^19.0.0",
+    "react-firebase-hooks": "^5.1.1",
     "react-router-dom": "^7.2.0",
     "tailwind": "^4.0.0"
   },
