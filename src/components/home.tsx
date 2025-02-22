@@ -1,3 +1,4 @@
+import Airline from "./airline";
 import InputBar from "./inputBar";
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
         <h1>Better Airlines</h1>
         <img className="logo" src="src\assets\logo.png" alt="Better Airlines Logo" />
         <InputBar/>
+        <Airline/>
     </div>
   );
 };
