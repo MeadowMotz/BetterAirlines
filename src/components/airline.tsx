@@ -67,21 +67,7 @@ const FlightData: FlightProps[] = [
     },
     amenities: ["Wi-Fi", "In-flight meals", "Entertainment"],
   },
-  {
-    airline: "Airline B",
-    departure: "2:00 PM",
-    arrival: "4:30 PM",
-    duration: "2h 30m",
-    price: "120",
-    baggagePolicies: "2 checked bags, 1 carry-on",
-    layoverTimes: "1h 30m in ATL",
-    airports: {
-      departure: "LAX",
-      arrival: "JFK",
-    },
-    amenities: ["Wi-Fi", "Extra legroom"],
-  },
-  // Add more flight data here...
+  // Airline B has been removed
 ];
 
 const App: React.FC = () => {
