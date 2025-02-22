@@ -3,90 +3,72 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const InputBar = () => {
-  const [inputs, setInputs] = useState<string[]>(new Array(6).fill("")); 
-  const [selectedDates, setSelectedDates] = useState<(Date | null)[]>(new Array(6).fill(null)); 
-  const [isDatePickerVisible, setIsDatePickerVisible] = useState<boolean>(false); 
-  const [activeRectangle, setActiveRectangle] = useState<number | null>(null); 
+  const [inputs, setInputs] = useState<string[]>(new Array(5).fill(""));
+  const [selectedDates, setSelectedDates] = useState<(Date | null)[]>(new Array(6).fill(null));
+  const [isDatePickerVisible, setIsDatePickerVisible] = useState<boolean>(false);
+  const [activeRectangle, setActiveRectangle] = useState<number | null>(null);
   const rectangleRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Get the position of each rectangle on the page
-  const getRectanglePosition = (index: number) => {
-    const rect = rectangleRefs.current[index]?.getBoundingClientRect();
-    return rect ? rect.top + rect.height : 0; // Position below the rectangle
-  };
+  const tripOptions = ["One-Way", "Round-Trip", "Multi-City"];
 
   // Handle input changes for text rectangles
   const handleInputChange = (index: number, value: string) => {
+    let formattedValue = value;
+
+    // Only apply validation for the first two input boxes
+    if (index === 0 || index === 1) {
+      formattedValue = value.toUpperCase().slice(0, 3); // Convert to uppercase & limit to 3 characters
+      if (!/^[A-Z]*$/.test(formattedValue)) return; // Allow only letters (no numbers/symbols)
+    }
+
     const newInputs = [...inputs];
-    newInputs[index] = value;
+    newInputs[index] = formattedValue;
     setInputs(newInputs);
   };
 
-  const handleButtonClick = () => {
-    // Handle button click (you can customize this function)
+  // Handle dropdown change for "Trip Type"
+  const handleDropdownChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    handleInputChange(4, event.target.value);
   };
 
   const handleRectangleClick = (index: number) => {
     if (index === 2 || index === 3) {
-      setActiveRectangle(index); 
-      setIsDatePickerVisible(true); 
+      setActiveRectangle(index);
+      setIsDatePickerVisible(true);
     }
   };
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as HTMLElement; // Type as HTMLElement
-      // Check if the click is outside the calendar and rectangle elements
-      if (
-        !rectangleRefs.current.some((ref) => ref && ref.contains(target))
-      ) {
-        setIsDatePickerVisible(false); 
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside); 
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside); 
-    };
-  }, []);
 
   const handleDateChange = (date: Date | null, index: number) => {
     const newSelectedDates = [...selectedDates];
     newSelectedDates[index] = date;
     setSelectedDates(newSelectedDates);
-    setIsDatePickerVisible(false); 
+    setIsDatePickerVisible(false);
   };
 
   const placeholders = [
     "Departure Symbol",
     "Return Symbol",
-    "Departure Date", 
-    "Return Date", 
-    "Trip Type",
-    "Passengers"
-  ];
+    "Departure Date",
+    "Return Date",
+    "Trip Type"
+ ];
 
-  // New function to handle the "Go" button click and show an alert
   const handleGoClick = () => {
     const results = inputs.map((input, index) => {
       if (index === 2 || index === 3) {
         return {
           label: placeholders[index],
-          value: selectedDates[index] ? selectedDates[index]?.toLocaleDateString() : "No date selected"
+          value: selectedDates[index] ? selectedDates[index]?.toLocaleDateString() : "No date selected",
         };
       } else {
         return {
           label: placeholders[index],
-          value: input || "No input"
+          value: input || "No input",
         };
       }
     });
 
-    // Prepare a string to display in the alert
     const alertMessage = results.map((item) => `${item.label}: ${item.value}`).join("\n");
-
-    // Show the alert with the results
     alert(`Submitted Data:\n\n${alertMessage}`);
   };
 
@@ -97,32 +79,17 @@ const InputBar = () => {
           return (
             <div
               key={index}
-              ref={(el) => (rectangleRefs.current[index] = el)} 
+              ref={(el) => (rectangleRefs.current[index] = el)}
               tabIndex={0}
               className="rectangle-wrapper"
-              onClick={() => handleRectangleClick(index)}  
+              onClick={() => handleRectangleClick(index)}
             >
               <div className="rectangle">
-                {/* Show the selected date or the corresponding label */}
-                {index === 2
-                  ? (selectedDates[index] 
-                      ? selectedDates[index]?.toLocaleDateString() 
-                      : "Departure Date")
-                  : (selectedDates[index] 
-                      ? selectedDates[index]?.toLocaleDateString() 
-                      : "Return Date")}
+                {selectedDates[index] ? selectedDates[index]?.toLocaleDateString() : placeholders[index]}
               </div>
 
               {isDatePickerVisible && activeRectangle === index && (
-                <div 
-                  className="calendar-container"
-                  style={{
-                    position: "absolute",
-                    top: `${getRectanglePosition(index) -50}px`, // Adjusted position to be below the rectangle
-                    left: `${getRectanglePosition(index)-50}px`,
-                    zIndex: 999,
-                  }}
-                >
+                <div className="calendar-container" style={{ position: "absolute", zIndex: 999 }}>
                   <DatePicker
                     selected={selectedDates[index]}
                     onChange={(date: Date | null) => handleDateChange(date, index)}
@@ -133,6 +100,20 @@ const InputBar = () => {
               )}
             </div>
           );
+        } else if (index === 4) {
+          // Dropdown for "Trip Type"
+          return (
+            <div key={index} className="rectangle">
+              <select value={input} onChange={handleDropdownChange} className="w-full p-2 border rounded">
+                <option value="">Select Trip Type</option>
+                {tripOptions.map((option, idx) => (
+                  <option key={idx} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+          );
         } else {
           return (
             <div key={index} className="rectangle">
@@ -140,7 +121,8 @@ const InputBar = () => {
                 type="text"
                 value={input}
                 onChange={(e) => handleInputChange(index, e.target.value)}
-                placeholder={placeholders[index]} 
+                placeholder={placeholders[index]}
+                maxLength={index <= 1 ? 3 : undefined} // Max length 3 for first two boxes
               />
             </div>
           );
