@@ -4,6 +4,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import Home from "./components/home";
+import Airlines from "./components/airlines";
 // import Profile from "./components/ai/profile";
 
 function App() {
@@ -11,9 +12,10 @@ function App() {
 
   return (
     <Router>
-    <Routes>
-      <Route path="/" element={<Home />} />
- {/* <Route path="/profile" element={<Profile />} /> */}
+    <Routes> 
+     <Route path="/" element={<Home />} />
+     <Route path="/airlines" element={<Airlines />} />
+      {/* <Route path="/profile" element={<Profile />} /> */}
     </Routes>
   </Router>
   )
