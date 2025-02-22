@@ -3,7 +3,8 @@ import "./App.css";
 import Home from "./components/home";
 import Airlines from "./components/airlines";
 import Testing from "./components/testing";
-// import Profile from "./components/ai/profile";
+// import Profile from "./components/ai/profile";import Results from "./components/Results"; // Import Results component
+
 
 function App() {
 
@@ -11,7 +12,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/airlines" element={<Airlines />} />
         <Route path="/testing" element={<Testing />} />
         {/* <Route path="/profile" element={<Profile />} /> */}
       </Routes>
