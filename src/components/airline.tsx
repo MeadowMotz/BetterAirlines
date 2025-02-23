@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface FlightProps {
   airline: string;
@@ -15,6 +15,11 @@ interface FlightProps {
   amenities: string[];
 }
 
+// const [imageSrc, setImageSrc] = useState('src/assets/Free-Black-Star-Shape-Vector-1.png');
+// const handleImageClick = () => {
+//     setImageSrc('src/assets/Free-Black-Star-Shape-Vector-1.png');
+// };
+
 const FlightTable: React.FC<{ flights: FlightProps[] }> = ({ flights }) => {
   return (
     <table className="min-w-full table-auto">
@@ -30,6 +35,8 @@ const FlightTable: React.FC<{ flights: FlightProps[] }> = ({ flights }) => {
           <th className="px-4 py-2 text-left">Baggage Policies</th>
           <th className="px-4 py-2 text-left">Layover Times</th>
           <th className="px-4 py-2 text-left">Amenities</th>
+          <th/>
+          <th/>
         </tr>
       </thead>
       <tbody>
@@ -45,6 +52,24 @@ const FlightTable: React.FC<{ flights: FlightProps[] }> = ({ flights }) => {
             <td className="px-4 py-2">{flight.baggagePolicies}</td>
             <td className="px-4 py-2">{flight.layoverTimes}</td>
             <td className="px-4 py-2">{flight.amenities.join(", ")}</td>
+            <td className="px-4 py-2">
+              <img 
+                style={{ cursor: 'pointer' }}
+                height="25px" 
+                width="25px" 
+                src="src/assets/Free-Black-Star-Shape-Vector-1.png" 
+                // onClick={handleImageClick}
+              />
+            </td>
+            <td className="px-4 py-2">
+            <img 
+                style={{ cursor: 'pointer' }}
+                height="25px" 
+                width="35px" 
+                src="src/assets/ringing-bell-icon-with-reflection-on-white-background.png" 
+                // onClick={handleImageClick}
+              />
+            </td>
           </tr>
         ))}
       </tbody>

@@ -25,7 +25,7 @@ const Home = () => {
         <div className="flex items-center gap-4">
           <img
             src={user.photoURL || "/default-profile.png"}
-            style={{ width: '50px', height: '50px' }}
+            style={{ width: '50px', height: '50px', cursor: 'pointer'}}
             alt={user.displayName || "User"}
             className="w-10 h-10 rounded-full cursor-pointer top-right-pic"
             onClick={() => navigate("/profile")}
