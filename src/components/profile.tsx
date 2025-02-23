@@ -2,6 +2,7 @@ import { useAuth } from "../utils/authcontext";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import FlightTable from "./airline";
 
 const Profile = () => {
   const { user, loading } = useAuth();
@@ -35,6 +36,8 @@ const Profile = () => {
       >
         Logout
       </button>
+      <br/>
+      <FlightTable/>
     </div>
   );
 };
