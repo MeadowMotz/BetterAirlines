@@ -59,6 +59,7 @@ const FlightTable: React.FC = () => {
             <th className="px-4 py-2 text-left">Layover Times</th>
             <th className="px-4 py-2 text-left">Amenities</th>
             <th className="px-4 py-2 text-left">Trip Type</th>
+            <th/>
           </tr>
         </thead>
         <tbody>
@@ -70,11 +71,15 @@ const FlightTable: React.FC = () => {
               <td className="px-4 py-2">{flight.airports.arrival}</td>
               <td className="px-4 py-2">{`${flight.arrivalDate} ${flight.arrivalTime}`}</td>
               <td className="px-4 py-2">{flight.duration}</td>
-              <td className="px-4 py-2">${flight.price}</td>
+              <td className="px-4 py-2">{flight.price}</td>
               <td className="px-4 py-2">{flight.baggagePolicies}</td>
               <td className="px-4 py-2">{flight.layoverTimes}</td>
               <td className="px-4 py-2">{flight.amenities.join(", ")}</td>
               <td className="px-4 py-2">{flight.option}</td>
+              <td>
+                <img src="/src/assets/Free-Transparent-Black-Star-Vector-1.png" style={{ width: "25px", height: "25px", cursor: 'pointer' }}/>
+                <img src="/src/assets/ringing-bell-icon-with-reflection-on-white-background.png" style={{ width: "25px", height: "25px", cursor: 'pointer' }}/>
+              </td>
             </tr>
           ))}
         </tbody>

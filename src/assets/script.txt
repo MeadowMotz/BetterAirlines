@@ -3,7 +3,7 @@ why?
 	ai does it for you!
 	our ai will filter the flights and recommend the best ones
 
-benefits:
+benefits
 	saves time looking for flights
 	saves time and money spent on flights by finding the best one
 
