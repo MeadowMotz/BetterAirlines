@@ -262,6 +262,7 @@ const InputBar = () => {
           <button
             className="px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
             onClick={handleGoClick}
+            style={{ width: '200px', height: '50px' }}
             disabled={isLoading}
           >
             {isLoading ? "Loading..." : "Go"}
