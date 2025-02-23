@@ -10,11 +10,17 @@ const Testing = () => {
     const fetchFlights = async () => {
       try {
         const response = await generateAirlines();
-        console.log(response);
-        const flightData = JSON.parse(response.content[0].text);
+        console.log("Testing response:", response);
+
+        // Ensure response is properly formatted
+        const flightData = Array.isArray(response)
+          ? response
+          : JSON.parse(response);
+
         setFlights(flightData);
         setLoading(false);
       } catch (err) {
+        console.error("Error fetching flights:", err);
         setError("Error fetching flights");
         setLoading(false);
       }
@@ -29,24 +35,43 @@ const Testing = () => {
     <div>
       <h2>Flight Options</h2>
       {flights.map((flight, index) => (
-        <div key={index} style={{ marginBottom: "20px" }}>
-          <p>Flight {index + 1}:</p>
-          <p>Airline: {flight.airline}</p>
+        <div
+          key={index}
+          style={{
+            marginBottom: "20px",
+            border: "1px solid #ccc",
+            padding: "10px",
+          }}
+        >
+          <h3>
+            Flight {index + 1}: {flight.airline}
+          </h3>
           <p>
-            Departure: {flight.departureDate} at {flight.departureTime}
+            <strong>Departure:</strong> {flight.departureDate} at{" "}
+            {flight.departureTime} ({flight.airports.departure})
           </p>
           <p>
-            Arrival: {flight.arrivalDate} at {flight.arrivalTime}
+            <strong>Arrival:</strong> {flight.arrivalDate} at{" "}
+            {flight.arrivalTime} ({flight.airports.arrival})
           </p>
-          <p>Duration: {flight.duration}</p>
-          <p>Price: {flight.price}</p>
-          <p>Baggage: {flight.baggagePolicies}</p>
-          <p>Layover: {flight.layoverTimes}</p>
           <p>
-            Airports: {flight.airports.departure} to {flight.airports.arrival}
+            <strong>Duration:</strong> {flight.duration}
           </p>
-          <p>Amenities: {flight.amenities.join(", ")}</p>
-          <p>Type: {flight.option}</p>
+          <p>
+            <strong>Price:</strong> {flight.price}
+          </p>
+          <p>
+            <strong>Baggage:</strong> {flight.baggagePolicies}
+          </p>
+          <p>
+            <strong>Layover:</strong> {flight.layoverTimes}
+          </p>
+          <p>
+            <strong>Amenities:</strong> {flight.amenities.join(", ")}
+          </p>
+          <p>
+            <strong>Option:</strong> {flight.option}
+          </p>
         </div>
       ))}
     </div>
