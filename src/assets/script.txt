@@ -1,17 +1,21 @@
+Do you want to book a vacation but are having difficult finding the best flight?
+Well, Better Airlines is here to help. 
+Our tool is designed to automate the process of picking the best flight for your next vacation!
+With Claude implemented inside our  to help you pick the best flights 
+
+how does it work?
+	our site uses Claude to pull flights online and
+	filter them based on user specificed criteria
+
+There are many benefits of using Better Airlines
+	saves time and money spent on flights by finding the best one
+	Which means more time at vacation!
+
 why? 
 	looking for the best flight
 	ai does it for you!
 	our ai will filter the flights and recommend the best ones
 
-benefits
-	saves time looking for flights
-	saves time and money spent on flights by finding the best one
-
-how?
-	our site pulls from a flight api
-	feeds it to claude
-	filters based on criteria given a coded prompt
-	shows it to user
 --------
 home page
 	can log in
