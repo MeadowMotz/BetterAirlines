@@ -40,7 +40,7 @@ export const generateAirlines = async (flightData: any) => {
           I want the departureTime: ${flightData.departureTime}
           I want the arrivalDate: ${flightData.arrivalDate}
           I want the arrivalTime: ${flightData.arrivalTime}
-          I want the price to be at most (only include one '$'): ${
+          I want the price to be at most (don't include a '$'): ${
             flightData.price
           }
           I want the baggagePolicies to be (do not include the pricing): ${
@@ -50,7 +50,9 @@ export const generateAirlines = async (flightData: any) => {
           I want to depart from: ${flightData.airports.departure}
           I want to arrive at: ${flightData.airports.arrival}
           I want these amenities: ${flightData.amenities.join(", ")}
-          I want my flight to be a ${flightData.option}
+          I want my flight (Can only be One-way or Round-Trip) to be a ${
+            flightData.option
+          }
           `,
         },
       ],
@@ -60,7 +62,22 @@ export const generateAirlines = async (flightData: any) => {
     if (content.type === "text") {
       const textContent = content.text;
       const jsonData = JSON.parse(textContent);
-      console.log("jsonData: ", jsonData);
+
+      // Sorting logic: First by price, then by duration
+      jsonData.sort((a: any, b: any) => {
+        // Parse price as a number (assuming format "$123" for example)
+        const priceA = parseFloat(a.price.replace("$", ""));
+        const priceB = parseFloat(b.price.replace("$", ""));
+        if (priceA === priceB) {
+          // If prices are equal, sort by duration
+          const durationA = parseFloat(a.duration);
+          const durationB = parseFloat(b.duration);
+          return durationA - durationB; // Ascending order of duration
+        }
+        return priceA - priceB; // Ascending order of price
+      });
+
+      console.log("Sorted jsonData: ", jsonData);
       return jsonData;
     }
     throw new Error("Invalid response format");
