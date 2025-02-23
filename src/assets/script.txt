@@ -1,0 +1,27 @@
+why? 
+	looking for the best flight
+	ai does it for you!
+	our ai will filter the flights and recommend the best ones
+
+benefits:
+	saves time looking for flights
+	saves time and money spent on flights by finding the best one
+
+how?
+	our site pulls from a flight api
+	feeds it to claude
+	filters based on criteria given a coded prompt
+	shows it to user
+--------
+home page
+	can log in
+	and give input
+
+flights page
+	shows 5 best flights
+	star and bell let you favorite and notify for the flights
+	can look up on other airline site to purchase ticket
+
+profile page
+	lists profile details and favorited flights
+	reason signed in is to receive email notifs for flights
