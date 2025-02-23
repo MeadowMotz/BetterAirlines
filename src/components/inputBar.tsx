@@ -286,22 +286,29 @@ const InputBar = () => {
           {/* Amenities */}
           <div className={styles.inputSection}>
             <label className={styles.label}>Amenities</label>
-            <select
-              multiple
-              value={amenities}
-              onChange={(e) =>
-                setAmenities(
-                  Array.from(e.target.selectedOptions, (option) => option.value)
-                )
-              }
-              className={styles.input}
-            >
+            <div className={styles.checkboxContainer}>
               {amenitiesOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
+                <div key={option} className={styles.checkboxItem}>
+                  <label htmlFor={option} className={styles.checkboxLabel}>
+                    {option}
+                  </label>
+                  <input
+                    type="checkbox"
+                    id={option}
+                    value={option}
+                    checked={amenities.includes(option)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setAmenities([...amenities, option]);
+                      } else {
+                        setAmenities(amenities.filter((item) => item !== option));
+                      }
+                    }}
+                    className={styles.checkbox}
+                  />
+                </div>
               ))}
-            </select>
+            </div>
           </div>
         </div>
 
