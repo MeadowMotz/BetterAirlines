@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import './FlightTable.css'; // Import the CSS file
 
 interface Flight {
   airline: string;
@@ -44,41 +45,41 @@ const FlightTable: React.FC = () => {
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full table-auto">
+    <div className="flight-table-container">
+      <table className="flight-table">
         <thead>
-          <tr className="bg-gray-200">
-            <th className="px-4 py-2 text-left">Airline</th>
-            <th className="px-4 py-2 text-left">Departure Airport</th>
-            <th className="px-4 py-2 text-left">Departure Date/Time</th>
-            <th className="px-4 py-2 text-left">Arrival Airport</th>
-            <th className="px-4 py-2 text-left">Arrival Date/Time</th>
-            <th className="px-4 py-2 text-left">Flight Duration</th>
-            <th className="px-4 py-2 text-left">Price</th>
-            <th className="px-4 py-2 text-left">Baggage Policies</th>
-            <th className="px-4 py-2 text-left">Layover Times</th>
-            <th className="px-4 py-2 text-left">Amenities</th>
-            <th className="px-4 py-2 text-left">Trip Type</th>
+          <tr>
+            <th>Airline</th>
+            <th>Departure Airport</th>
+            <th>Departure Date/Time</th>
+            <th>Arrival Airport</th>
+            <th>Arrival Date/Time</th>
+            <th>Flight Duration</th>
+            <th className="price">Price</th>
+            <th>Baggage Policies</th>
+            <th>Layover Times</th>
+            <th>Amenities</th>
+            <th>Trip Type</th>
             <th/>
           </tr>
         </thead>
         <tbody>
           {flights.map((flight: Flight, index: number) => (
-            <tr key={index} className="border-b hover:bg-gray-100">
-              <td className="px-4 py-2">{flight.airline}</td>
-              <td className="px-4 py-2">{flight.airports.departure}</td>
-              <td className="px-4 py-2">{`${flight.departureDate} ${flight.departureTime}`}</td>
-              <td className="px-4 py-2">{flight.airports.arrival}</td>
-              <td className="px-4 py-2">{`${flight.arrivalDate} ${flight.arrivalTime}`}</td>
-              <td className="px-4 py-2">{flight.duration}</td>
-              <td className="px-4 py-2">{flight.price}</td>
-              <td className="px-4 py-2">{flight.baggagePolicies}</td>
-              <td className="px-4 py-2">{flight.layoverTimes}</td>
-              <td className="px-4 py-2">{flight.amenities.join(", ")}</td>
-              <td className="px-4 py-2">{flight.option}</td>
-              <td>
-                <img src="/src/assets/Free-Transparent-Black-Star-Vector-1.png" style={{ width: "25px", height: "25px", cursor: 'pointer' }}/>
-                <img src="/src/assets/ringing-bell-icon-with-reflection-on-white-background.png" style={{ width: "25px", height: "25px", cursor: 'pointer' }}/>
+            <tr key={index}>
+              <td>{flight.airline}</td>
+              <td>{flight.airports.departure}</td>
+              <td>{`${flight.departureDate} ${flight.departureTime}`}</td>
+              <td>{flight.airports.arrival}</td>
+              <td>{`${flight.arrivalDate} ${flight.arrivalTime}`}</td>
+              <td>{flight.duration}</td>
+              <td className="price">${flight.price}</td>
+              <td>{flight.baggagePolicies}</td>
+              <td>{flight.layoverTimes}</td>
+              <td>{flight.amenities.join(", ")}</td>
+              <td>{flight.option}</td>
+              <td className="icon-container">
+                <img src="/src/assets/Free-Transparent-Black-Star-Vector-1.png" style={{ width: "25px", height: "25px" }}/>
+                <img src="/src/assets/ringing-bell-icon-with-reflection-on-white-background.png" style={{ width: "25px", height: "25px" }}/>
               </td>
             </tr>
           ))}
