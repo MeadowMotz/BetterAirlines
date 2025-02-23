@@ -1,39 +1,26 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { auth, provider, signInWithPopup } from '../utils/firebase';
+import { auth, provider, signInWithPopup } from "../utils/firebase";
+import { useAuth } from "../utils/authcontext";
 
 const GoogleSignIn = () => {
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const { user, loading } = useAuth();
 
   const handleGoogleSignIn = async () => {
     try {
-      const result = await signInWithPopup(auth, provider);
-      setUser(result.user);
-      setError(null);
+      await signInWithPopup(auth, provider);
     } catch (error) {
-      setError(error.message);
-      setUser(null);
+      console.error("Google Sign-In Error:", error.message);
     }
   };
 
-  const handleProfileClick = () => {
-      navigate('/profile');
-    }
-  };
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div>
-      {user ? (
-        <div>
-          <h3>Welcome, {user.displayName}!</h3>
-          <img src={user.photoURL} alt={user.displayName} onClick={handleProfileClick} style={{ cursor: 'pointer' }} />
-        </div>
-      ) : (
-        <button onClick={handleGoogleSignIn}>Sign in with Google</button>
-      )}
-      {error && <p>{error}</p>}
+      {!user ? (
+        <button onClick={handleGoogleSignIn} className="px-4 py-2 bg-blue-600 text-white rounded-lg top-right-button">
+          Sign in with Google
+        </button>
+      ) : null}
     </div>
   );
 };
