@@ -36,9 +36,13 @@ export const generateAirlines = async (flightData: any) => {
           role: "user",
           content: `Generate ${limit} realistic flight options between major airports.
           I want the airline to tbe: ${flightData.airline}
-          I want the departureDate: ${flightData.departureDate}
+          I want the departureDate (add one to the date): ${
+            flightData.departureDate
+          }
           I want the departureTime: ${flightData.departureTime}
-          I want the arrivalDate: ${flightData.arrivalDate}
+          I want the arrivalDate (add one to the date): ${
+            flightData.arrivalDate
+          }
           I want the arrivalTime: ${flightData.arrivalTime}
           I want the price to be at most (don't include a '$'): ${
             flightData.price
