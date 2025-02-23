@@ -57,7 +57,7 @@ const FlightData: FlightProps[] = [
     airline: "Airline A",
     departure: "10:00 AM",
     arrival: "12:30 PM",
-    duration: "2h 30m",
+    duration: "1h 30m",
     price: "150",
     baggagePolicies: "1 checked bag, 1 carry-on",
     layoverTimes: "No layover",
