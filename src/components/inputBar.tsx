@@ -2,12 +2,13 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import styles from './InputBar.module.css'; // Import CSS module
 import { generateAirlines } from "../utils/airlines";
 
 const InputBar = () => {
   const navigate = useNavigate();
 
-  // State for all inputs
+  // State declarations
   const [airline, setAirline] = useState<string>("");
   const [departureDate, setDepartureDate] = useState<Date | null>(null);
   const [departureTime, setDepartureTime] = useState<string>("");
@@ -16,10 +17,7 @@ const InputBar = () => {
   const [price, setPrice] = useState<string>("");
   const [baggagePolicies, setBaggagePolicies] = useState<string>("");
   const [layoverTimes, setLayoverTimes] = useState<string>("");
-  const [airports, setAirports] = useState<{
-    departure: string;
-    arrival: string;
-  }>({
+  const [airports, setAirports] = useState<{ departure: string; arrival: string }>({
     departure: "",
     arrival: "",
   });
@@ -29,15 +27,12 @@ const InputBar = () => {
   // Loading state
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // State for date picker visibility
-  const [isDatePickerVisible, setIsDatePickerVisible] =
-    useState<boolean>(false);
-  const [activeDateField, setActiveDateField] = useState<
-    "departure" | "arrival" | null
-  >(null);
+  // Date picker visibility logic
+  const [isDatePickerVisible, setIsDatePickerVisible] = useState<boolean>(false);
+  const [activeDateField, setActiveDateField] = useState<"departure" | "arrival" | null>(null);
   const calendarRef = useRef<HTMLDivElement | null>(null);
 
-  // Enums for dropdowns
+  // Options arrays
   const airlineOptions = [
     "Delta Air Lines",
     "American Airlines",
@@ -61,11 +56,8 @@ const InputBar = () => {
     "Beverage service",
   ];
 
-  // Handle date change
-  const handleDateChange = (
-    date: Date | null,
-    field: "departure" | "arrival"
-  ) => {
+  // Handlers
+  const handleDateChange = (date: Date | null, field: "departure" | "arrival") => {
     if (field === "departure") {
       setDepartureDate(date);
     } else if (field === "arrival") {
@@ -77,10 +69,7 @@ const InputBar = () => {
   // Handle clicking outside the calendar
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (
-        calendarRef.current &&
-        !calendarRef.current.contains(e.target as Node)
-      ) {
+      if (calendarRef.current && !calendarRef.current.contains(e.target as Node)) {
         setIsDatePickerVisible(false);
       }
     };
@@ -119,131 +108,166 @@ const InputBar = () => {
   };
 
   return (
-    <div className="input">
-      {/* Airline Dropdown */}
-      <div className="input-field">
-        <label>Airline</label>
-        <select value={airline} onChange={(e) => setAirline(e.target.value)}>
-          <option value="">Select Airline</option>
-          {airlineOptions.map((option, index) => (
-            <option key={index} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </div>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600">
+      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-6xl">
+        <h1 className="text-3xl font-bold mb-6 text-gray-800 text-center">Plan Your Trip</h1>
+        
+        {/* Grid for Main Inputs */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {/* Airline */}
+          <div className={styles.inputSection}>
+            <label className={styles.label}>Airline</label>
+            <select
+              value={airline}
+              onChange={(e) => setAirline(e.target.value)}
+              className={styles.input}
+            >
+              <option value="">Select Airline</option>
+              {airlineOptions.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+          </div>
 
-      {/* Departure Date */}
-      <div className="input-field">
-        <label>Departure Date</label>
-        <div
-          className="date-input"
-          onClick={() => {
-            setActiveDateField("departure");
-            setIsDatePickerVisible(true);
-          }}
-        >
-          {departureDate
-            ? departureDate.toLocaleDateString()
-            : "Select Departure Date"}
-        </div>
-        {isDatePickerVisible && activeDateField === "departure" && (
-          <div ref={calendarRef} className="calendar-container">
-            <DatePicker
-              selected={departureDate}
-              onChange={(date: Date | null) =>
-                handleDateChange(date, "departure")
-              }
-              inline
+          {/* Trip Type */}
+          <div className={styles.inputSection}>
+            <label className={styles.label}>Trip Type</label>
+            <select
+              value={tripOption}
+              onChange={(e) => setTripOption(e.target.value)}
+              className={styles.input}
+            >
+              <option value="">Select Trip Type</option>
+              {tripOptions.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Departure Date */}
+          <div className={styles.inputSection}>
+            <label className={styles.label}>Departure Date</label>
+            <div
+              className={styles.dateInput}
+              onClick={() => {
+                setActiveDateField("departure");
+                setIsDatePickerVisible(true);
+              }}
+            >
+              {departureDate ? departureDate.toLocaleDateString() : "Select Departure Date"}
+            </div>
+            {isDatePickerVisible && activeDateField === "departure" && (
+              <div ref={calendarRef} className={styles.calendarContainer}>
+                <DatePicker
+                  selected={departureDate}
+                  onChange={(date: Date | null) => handleDateChange(date, "departure")}
+                  inline
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Arrival Date */}
+          <div className={styles.inputSection}>
+            <label className={styles.label}>Arrival Date</label>
+            <div
+              className={styles.dateInput}
+              onClick={() => {
+                setActiveDateField("arrival");
+                setIsDatePickerVisible(true);
+              }}
+            >
+              {arrivalDate ? arrivalDate.toLocaleDateString() : "Select Arrival Date"}
+            </div>
+            {isDatePickerVisible && activeDateField === "arrival" && (
+              <div ref={calendarRef} className={styles.calendarContainer}>
+                <DatePicker
+                  selected={arrivalDate}
+                  onChange={(date: Date | null) => handleDateChange(date, "arrival")}
+                  inline
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Arrival Airport */}
+          <div className={styles.inputSection}>
+            <label className={styles.label}>Arrival Airport</label>
+            <input
+              type="text"
+              value={airports.arrival}
+              onChange={(e) => setAirports({ ...airports, arrival: e.target.value })}
+              placeholder="Arrival Airport"
+              className={styles.input}
             />
           </div>
-        )}
-      </div>
 
-      {/* Arrival Date */}
-      <div className="input-field">
-        <label>Arrival Date</label>
-        <div
-          className="date-input"
-          onClick={() => {
-            setActiveDateField("arrival");
-            setIsDatePickerVisible(true);
-          }}
-        >
-          {arrivalDate
-            ? arrivalDate.toLocaleDateString()
-            : "Select Arrival Date"}
-        </div>
-        {isDatePickerVisible && activeDateField === "arrival" && (
-          <div ref={calendarRef} className="calendar-container">
-            <DatePicker
-              selected={arrivalDate}
-              onChange={(date: Date | null) =>
-                handleDateChange(date, "arrival")
-              }
-              inline
+          {/* Price */}
+          <div className={styles.inputSection}>
+            <label className={styles.label}>Price</label>
+            <input
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder="$0.00"
+              className={styles.input}
             />
           </div>
-        )}
-      </div>
+        </div>
 
-      {/* Price */}
-      <div className="input-field">
-        <label>Price</label>
-        <input
-          type="text"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          placeholder="$0.00"
-        />
-      </div>
+        {/* Symmetrical Layout for Remaining Inputs */}
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Baggage Policies */}
+          <div className={styles.inputSection}>
+            <label className={styles.label}>Baggage Policies</label>
+            <input
+              type="text"
+              value={baggagePolicies}
+              onChange={(e) => setBaggagePolicies(e.target.value)}
+              placeholder="e.g., 1 carry-on bag included"
+              className={styles.input}
+            />
+          </div>
 
-      {/* Baggage Policies */}
-      <div className="input-field">
-        <label>Baggage Policies</label>
-        <input
-          type="text"
-          value={baggagePolicies}
-          onChange={(e) => setBaggagePolicies(e.target.value)}
-          placeholder="e.g., 1 carry-on bag included"
-        />
-      </div>
+          {/* Layover Times */}
+          <div className={styles.inputSection}>
+            <label className={styles.label}>Layover Times</label>
+            <input
+              type="text"
+              value={layoverTimes}
+              onChange={(e) => setLayoverTimes(e.target.value)}
+              placeholder="e.g., 2h 30m layover in Atlanta (ATL)"
+              className={styles.input}
+            />
+          </div>
 
-      {/* Layover Times */}
-      <div className="input-field">
-        <label>Layover Times</label>
-        <input
-          type="text"
-          value={layoverTimes}
-          onChange={(e) => setLayoverTimes(e.target.value)}
-          placeholder="e.g., 2h 30m layover in Atlanta (ATL)"
-        />
-      </div>
+          {/* Amenities */}
+          <div className={styles.inputSection}>
+            <label className={styles.label}>Amenities</label>
+            <select
+              multiple
+              value={amenities}
+              onChange={(e) => setAmenities(Array.from(e.target.selectedOptions, option => option.value))}
+              className={styles.input}
+            >
+              {amenitiesOptions.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+          </div>
+        </div>
 
-      {/* Trip Option */}
-      <div className="input-field">
-        <label>Trip Option</label>
-        <select
-          value={tripOption}
-          onChange={(e) => setTripOption(e.target.value)}
-        >
-          <option value="">Select Trip Type</option>
-          {tripOptions.map((option, index) => (
-            <option key={index} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
+        {/* Submit Button */}
+        <div className="mt-6 text-center">
+          <button
+            className="px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+            onClick={handleGoClick}
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Go"}
+          </button>
+        </div>
       </div>
-
-      {/* Submit Button */}
-      <button
-        className="oval-button"
-        onClick={handleGoClick}
-        disabled={isLoading}
-      >
-        {isLoading ? "Loading..." : "Go"}
-      </button>
     </div>
   );
 };

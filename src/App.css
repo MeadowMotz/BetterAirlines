@@ -1,11 +1,21 @@
+/* Ensure the root element covers the full height of the viewport */
 #root {
+  min-height: 100vh; /* Full viewport height */
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  background-color: #BDB1A8;
+  background-color: #BDB1A8; /* Your desired background color */
 }
 
+/* Optional: Ensure the body and html also cover the full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Rest of your styles */
 .logo {
   height: 6em;
   padding: 1.5em;

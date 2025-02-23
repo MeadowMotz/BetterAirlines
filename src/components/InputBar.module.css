@@ -1,0 +1,56 @@
+.inputSection {
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    background-color: #eff6ff; /* Blue-50 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+  }
+  
+  .inputSection:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    transition: border-color 0.2s;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+  }
+  
+  .dateInput {
+    padding: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  
+  .dateInput:hover {
+    border-color: #3b82f6;
+  }
+  
+  .calendarContainer {
+    margin-top: 0.5rem;
+    position: absolute;
+    z-index: 10;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
