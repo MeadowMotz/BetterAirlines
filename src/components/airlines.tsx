@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Airline from "./airline";
-import { useLocation } from "react-router-dom"; // If using React Router
+import { useLocation, useNavigate } from "react-router-dom"; // If using React Router
 import InputBar from "./inputBar";
 
 interface Flight {
@@ -22,6 +22,7 @@ interface Flight {
 }
 
 const Airlines: React.FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const [flights, setFlights] = useState<Flight[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -48,6 +49,11 @@ const Airlines: React.FC = () => {
 
   return (
     <div className="p-4 space-y-4">
+      <img
+        onClick={() => navigate("/")}
+        src="/src/assets/logo.png"
+        alt="Better Airlines Logo"
+      />
       <InputBar />
       <Airline></Airline>
     </div>
