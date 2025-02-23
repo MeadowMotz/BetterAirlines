@@ -20,7 +20,7 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <img onClick={() => navigate("/")} src="../assets/logo" alt="Better Airlines Logo"/>
+      <img onClick={() => navigate("/")} src="/src/assets/logo.png" alt="Better Airlines Logo"/>
       <h1 className="text-3xl font-bold">Profile</h1>
       <img
         className="rounded-full w-24 h-24"

@@ -18,7 +18,7 @@ const Home = () => {
   return (
     <div className="flex justify-between items-center p-4 bg-gray-200">
       <h1 className="text-xl font-bold">Better Airlines</h1>
-      <img onClick={() => navigate("/")} src="../assets/logo" alt="Better Airlines Logo"/>
+      <img onClick={() => navigate("/")} src="/src/assets/logo.png" alt="Better Airlines Logo"/>
       {loading ? (
         <p>Loading...</p>
       ) : user ? (
