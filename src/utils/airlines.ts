@@ -40,7 +40,9 @@ export const generateAirlines = async (flightData: any) => {
           I want the departureTime: ${flightData.departureTime}
           I want the arrivalDate: ${flightData.arrivalDate}
           I want the arrivalTime: ${flightData.arrivalTime}
-          I want the price to be at most: ${flightData.price}
+          I want the price to be at most (only include one '$'): ${
+            flightData.price
+          }
           I want the baggagePolicies to be (do not include the pricing): ${
             flightData.baggagePolicies
           }
