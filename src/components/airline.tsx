@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import './FlightTable.css'; // Import the CSS file
+import "./FlightTable.css"; // Import the CSS file
 
 interface Flight {
   airline: string;
@@ -22,10 +22,11 @@ interface Flight {
 const FlightTable: React.FC = () => {
   const location = useLocation();
   const [flights, setFlights] = useState<Flight[]>([]);
+  const [favorites, setFavorites] = useState<boolean[]>([]);
+  const [bellNotifications, setBellNotifications] = useState<boolean[]>([]);
 
   useEffect(() => {
     const incomingFlights = location.state?.flights || [];
-
     const flatFlights = incomingFlights.flat();
 
     const uniqueFlights = [
@@ -37,8 +38,26 @@ const FlightTable: React.FC = () => {
       ).values(),
     ];
 
-    setFlights(uniqueFlights); // Update the state with unique flights
+    setFlights(uniqueFlights);
+    setFavorites(new Array(uniqueFlights.length).fill(false));
+    setBellNotifications(new Array(uniqueFlights.length).fill(false));
   }, [location.state?.flights]);
+
+  const toggleFavorite = (index: number) => {
+    setFavorites((prevFavorites) => {
+      const newFavorites = [...prevFavorites];
+      newFavorites[index] = !newFavorites[index];
+      return newFavorites;
+    });
+  };
+
+  const toggleBell = (index: number) => {
+    setBellNotifications((prevBell) => {
+      const newBell = [...prevBell];
+      newBell[index] = !newBell[index];
+      return newBell;
+    });
+  };
 
   if (!flights.length) {
     return <div className="p-6">No flights available</div>;
@@ -60,7 +79,7 @@ const FlightTable: React.FC = () => {
             <th>Layover Times</th>
             <th>Amenities</th>
             <th>Trip Type</th>
-            <th/>
+            <th />
           </tr>
         </thead>
         <tbody>
@@ -78,8 +97,28 @@ const FlightTable: React.FC = () => {
               <td>{flight.amenities.join(", ")}</td>
               <td>{flight.option}</td>
               <td className="icon-container">
-                <img src="/src/assets/Free-Transparent-Black-Star-Vector-1.png" style={{ width: "25px", height: "25px" }}/>
-                <img src="/src/assets/ringing-bell-icon-with-reflection-on-white-background.png" style={{ width: "25px", height: "25px" }}/>
+                {/* Star Toggle */}
+                <img
+                  src={
+                    favorites[index]
+                      ? "/src/assets/goldstar.png"
+                      : "/src/assets/Free-Transparent-Black-Star-Vector-1.png"
+                  }
+                  style={{ width: "25px", height: "25px", cursor: "pointer" }}
+                  onClick={() => toggleFavorite(index)}
+                  alt="Favorite Star"
+                />
+                {/* Bell Toggle */}
+                <img
+                  src={
+                    bellNotifications[index]
+                      ? "/src/assets/ringingbell.png"
+                      : "/src/assets/ringing-bell-icon-with-reflection-on-white-background.png"
+                  }
+                  style={{ width: "25px", height: "25px", cursor: "pointer" }}
+                  onClick={() => toggleBell(index)}
+                  alt="Notification Bell"
+                />
               </td>
             </tr>
           ))}

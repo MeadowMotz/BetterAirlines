@@ -21,7 +21,12 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <img style={{ cursor: 'pointer' }} onClick={() => navigate("/")} src="/src/assets/logo.png" alt="Better Airlines Logo"/>
+      <img
+        style={{ cursor: "pointer" }}
+        onClick={() => navigate("/")}
+        src="/src/assets/logo.png"
+        alt="Better Airlines Logo"
+      />
       <h1 className="text-3xl font-bold">Profile</h1>
       <img
         className="rounded-full w-24 h-24"
@@ -36,8 +41,8 @@ const Profile = () => {
       >
         Logout
       </button>
-      <br/>
-      <FlightTable/>
+      <br />
+      <FlightTable />
     </div>
   );
 };
