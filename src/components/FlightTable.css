@@ -1,0 +1,52 @@
+/* FlightTable.css */
+
+/* Apply general styles for the table container */
+.flight-table-container {
+    padding: 20px;
+    background-color: #ffffff; /* White background for the table */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a card-like appearance */
+    border-radius: 12px; /* Curvature on the edges */
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+    margin-top: 20px; /* Space from other components */
+    margin-bottom: 20px; /* Space below */
+  }
+  
+  /* Style the table itself */
+  .flight-table {
+    width: 100%;
+    border-collapse: collapse; /* Ensure there are no gaps between table cells */
+    text-align: left;
+  }
+  
+  /* Style for table header */
+  .flight-table th {
+    padding: 12px 16px;
+    background-color: #f4f4f4; /* Light gray background for the header */
+    color: #333; /* Dark text color */
+    font-weight: 600; /* Bold header text */
+    border-bottom: 2px solid #ddd; /* Subtle bottom border for separation */
+  }
+  
+  /* Style for table rows */
+  .flight-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd; /* Add bottom borders to rows */
+    color: #555; /* Slightly lighter text color */
+  }
+  
+  /* Hover effect for rows */
+  .flight-table tr:hover {
+    background-color: #f9f9f9; /* Light hover effect */
+  }
+  
+  /* Style for price column to make it stand out */
+  .flight-table .price {
+    color: #4caf50; /* Green color for price */
+    font-weight: 600;
+  }
+  
+  /* Style for the icon container */
+  .icon-container img {
+    margin-right: 8px; /* Space between icons */
+    cursor: pointer; /* Pointer cursor on hover */
+  }
