@@ -63,3 +63,15 @@
   border: none; /* Remove border (optional) */
   text-align: center; /* Optional: center the text inside the input box */
 }
+
+.top-right-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.top-right-pic {
+  position: absolute;
+  top: 35px;
+  right: 13px;
+}
