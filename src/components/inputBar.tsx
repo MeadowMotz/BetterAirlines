@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import styles from './InputBar.module.css'; // Import CSS module
+import styles from "./InputBar.module.css"; // Import CSS module
 import { generateAirlines } from "../utils/airlines";
 
 const InputBar = () => {
@@ -17,7 +17,10 @@ const InputBar = () => {
   const [price, setPrice] = useState<string>("");
   const [baggagePolicies, setBaggagePolicies] = useState<string>("");
   const [layoverTimes, setLayoverTimes] = useState<string>("");
-  const [airports, setAirports] = useState<{ departure: string; arrival: string }>({
+  const [airports, setAirports] = useState<{
+    departure: string;
+    arrival: string;
+  }>({
     departure: "",
     arrival: "",
   });
@@ -28,8 +31,11 @@ const InputBar = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Date picker visibility logic
-  const [isDatePickerVisible, setIsDatePickerVisible] = useState<boolean>(false);
-  const [activeDateField, setActiveDateField] = useState<"departure" | "arrival" | null>(null);
+  const [isDatePickerVisible, setIsDatePickerVisible] =
+    useState<boolean>(false);
+  const [activeDateField, setActiveDateField] = useState<
+    "departure" | "arrival" | null
+  >(null);
   const calendarRef = useRef<HTMLDivElement | null>(null);
 
   // Options arrays
@@ -57,7 +63,10 @@ const InputBar = () => {
   ];
 
   // Handlers
-  const handleDateChange = (date: Date | null, field: "departure" | "arrival") => {
+  const handleDateChange = (
+    date: Date | null,
+    field: "departure" | "arrival"
+  ) => {
     if (field === "departure") {
       setDepartureDate(date);
     } else if (field === "arrival") {
@@ -69,7 +78,10 @@ const InputBar = () => {
   // Handle clicking outside the calendar
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (calendarRef.current && !calendarRef.current.contains(e.target as Node)) {
+      if (
+        calendarRef.current &&
+        !calendarRef.current.contains(e.target as Node)
+      ) {
         setIsDatePickerVisible(false);
       }
     };
@@ -110,8 +122,10 @@ const InputBar = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600">
       <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-6xl">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800 text-center">Plan Your Trip</h1>
-        
+        <h1 className="text-3xl font-bold mb-6 text-gray-800 text-center">
+          Plan Your Trip
+        </h1>
+
         {/* Grid for Main Inputs */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Airline */}
@@ -124,7 +138,9 @@ const InputBar = () => {
             >
               <option value="">Select Airline</option>
               {airlineOptions.map((option) => (
-                <option key={option} value={option}>{option}</option>
+                <option key={option} value={option}>
+                  {option}
+                </option>
               ))}
             </select>
           </div>
@@ -139,7 +155,9 @@ const InputBar = () => {
             >
               <option value="">Select Trip Type</option>
               {tripOptions.map((option) => (
-                <option key={option} value={option}>{option}</option>
+                <option key={option} value={option}>
+                  {option}
+                </option>
               ))}
             </select>
           </div>
@@ -154,13 +172,17 @@ const InputBar = () => {
                 setIsDatePickerVisible(true);
               }}
             >
-              {departureDate ? departureDate.toLocaleDateString() : "Select Departure Date"}
+              {departureDate
+                ? departureDate.toLocaleDateString()
+                : "Select Departure Date"}
             </div>
             {isDatePickerVisible && activeDateField === "departure" && (
               <div ref={calendarRef} className={styles.calendarContainer}>
                 <DatePicker
                   selected={departureDate}
-                  onChange={(date: Date | null) => handleDateChange(date, "departure")}
+                  onChange={(date: Date | null) =>
+                    handleDateChange(date, "departure")
+                  }
                   inline
                 />
               </div>
@@ -177,17 +199,35 @@ const InputBar = () => {
                 setIsDatePickerVisible(true);
               }}
             >
-              {arrivalDate ? arrivalDate.toLocaleDateString() : "Select Arrival Date"}
+              {arrivalDate
+                ? arrivalDate.toLocaleDateString()
+                : "Select Arrival Date"}
             </div>
             {isDatePickerVisible && activeDateField === "arrival" && (
               <div ref={calendarRef} className={styles.calendarContainer}>
                 <DatePicker
                   selected={arrivalDate}
-                  onChange={(date: Date | null) => handleDateChange(date, "arrival")}
+                  onChange={(date: Date | null) =>
+                    handleDateChange(date, "arrival")
+                  }
                   inline
                 />
               </div>
             )}
+          </div>
+
+          {/* Departure Airport */}
+          <div className={styles.inputSection}>
+            <label className={styles.label}>Departure Airport</label>
+            <input
+              type="text"
+              value={airports.departure}
+              onChange={(e) =>
+                setAirports({ ...airports, departure: e.target.value })
+              }
+              placeholder="Departure Airport"
+              className={styles.input}
+            />
           </div>
 
           {/* Arrival Airport */}
@@ -196,7 +236,9 @@ const InputBar = () => {
             <input
               type="text"
               value={airports.arrival}
-              onChange={(e) => setAirports({ ...airports, arrival: e.target.value })}
+              onChange={(e) =>
+                setAirports({ ...airports, arrival: e.target.value })
+              }
               placeholder="Arrival Airport"
               className={styles.input}
             />
@@ -247,11 +289,17 @@ const InputBar = () => {
             <select
               multiple
               value={amenities}
-              onChange={(e) => setAmenities(Array.from(e.target.selectedOptions, option => option.value))}
+              onChange={(e) =>
+                setAmenities(
+                  Array.from(e.target.selectedOptions, (option) => option.value)
+                )
+              }
               className={styles.input}
             >
               {amenitiesOptions.map((option) => (
-                <option key={option} value={option}>{option}</option>
+                <option key={option} value={option}>
+                  {option}
+                </option>
               ))}
             </select>
           </div>
@@ -262,7 +310,7 @@ const InputBar = () => {
           <button
             className="px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
             onClick={handleGoClick}
-            style={{ width: '200px', height: '50px' }}
+            style={{ width: "200px", height: "50px" }}
             disabled={isLoading}
           >
             {isLoading ? "Loading..." : "Go"}
