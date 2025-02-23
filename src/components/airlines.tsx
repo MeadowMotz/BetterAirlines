@@ -1,47 +1,55 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Airline from "./airline";
+import { useLocation } from "react-router-dom"; // If using React Router
+import InputBar from "./inputBar";
 
 interface Flight {
   airline: string;
-  departure: string;
-  arrival: string;
+  departureDate: string;
+  departureTime: string;
+  arrivalDate: string;
+  arrivalTime: string;
   duration: string;
   price: string;
+  baggagePolicies: string;
+  layoverTimes: string;
+  option: string;
+  airports: {
+    departure: string;
+    arrival: string;
+  };
+  amenities: string[];
 }
 
-const Airlines: React.FC<{ flights?: Flight[] }> = ({ flights }) => {
-  const sampleFlights: Flight[] = [
-    {
-      airline: "Delta Airlines",
-      departure: "10:30 AM",
-      arrival: "1:45 PM",
-      duration: "3h 15m",
-      price: "250",
-    },
-    {
-      airline: "United Airlines",
-      departure: "2:00 PM",
-      arrival: "5:20 PM",
-      duration: "3h 20m",
-      price: "270",
-    },
-    {
-      airline: "American Airlines",
-      departure: "4:15 PM",
-      arrival: "7:40 PM",
-      duration: "3h 25m",
-      price: "290",
-    },
-  ];
+const Airlines: React.FC = () => {
+  const location = useLocation();
+  const [flights, setFlights] = useState<Flight[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  // Use `flights` if available; otherwise, use sample data.
-  const flightData = flights && flights.length > 0 ? flights : sampleFlights;
+  useEffect(() => {
+    // Ensure we have a flat array of flights and remove duplicates
+    const incomingFlights = location.state?.flights || [];
+    const flatFlights = incomingFlights.flat(); // In case it's an array of arrays
+    const uniqueFlights = [
+      ...new Map(
+        flatFlights.map((flight) => [
+          flight.airline + flight.departureTime,
+          flight,
+        ])
+      ).values(),
+    ];
+    setFlights(uniqueFlights);
+  }, [location.state?.flights]);
+
+  // If there is an error, show it
+  if (error) return <div>Error: {error}</div>;
+
+  if (!flights.length) return <div>No flights available</div>;
 
   return (
     <div className="p-4 space-y-4">
-      {flightData.map((flight, index) => (
-        <Airline key={index} {...flight} />
-      ))}
+      <InputBar />
+      <Airline></Airline>
     </div>
   );
 };

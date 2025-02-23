@@ -1,8 +1,12 @@
 import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { generateAirlines } from "../utils/airlines";
 
 const InputBar = () => {
+  const navigate = useNavigate();
+
   // State for all inputs
   const [airline, setAirline] = useState<string>("");
   const [departureDate, setDepartureDate] = useState<Date | null>(null);
@@ -12,16 +16,25 @@ const InputBar = () => {
   const [price, setPrice] = useState<string>("");
   const [baggagePolicies, setBaggagePolicies] = useState<string>("");
   const [layoverTimes, setLayoverTimes] = useState<string>("");
-  const [airports, setAirports] = useState<{ departure: string; arrival: string }>({
+  const [airports, setAirports] = useState<{
+    departure: string;
+    arrival: string;
+  }>({
     departure: "",
     arrival: "",
   });
   const [amenities, setAmenities] = useState<string[]>([]);
   const [tripOption, setTripOption] = useState<string>("");
 
+  // Loading state
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   // State for date picker visibility
-  const [isDatePickerVisible, setIsDatePickerVisible] = useState<boolean>(false);
-  const [activeDateField, setActiveDateField] = useState<"departure" | "arrival" | null>(null);
+  const [isDatePickerVisible, setIsDatePickerVisible] =
+    useState<boolean>(false);
+  const [activeDateField, setActiveDateField] = useState<
+    "departure" | "arrival" | null
+  >(null);
   const calendarRef = useRef<HTMLDivElement | null>(null);
 
   // Enums for dropdowns
@@ -49,7 +62,10 @@ const InputBar = () => {
   ];
 
   // Handle date change
-  const handleDateChange = (date: Date | null, field: "departure" | "arrival") => {
+  const handleDateChange = (
+    date: Date | null,
+    field: "departure" | "arrival"
+  ) => {
     if (field === "departure") {
       setDepartureDate(date);
     } else if (field === "arrival") {
@@ -61,7 +77,10 @@ const InputBar = () => {
   // Handle clicking outside the calendar
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (calendarRef.current && !calendarRef.current.contains(e.target as Node)) {
+      if (
+        calendarRef.current &&
+        !calendarRef.current.contains(e.target as Node)
+      ) {
         setIsDatePickerVisible(false);
       }
     };
@@ -71,22 +90,32 @@ const InputBar = () => {
   }, []);
 
   // Handle form submission
-  const handleGoClick = () => {
-    const flightData = {
-      airline,
-      departureDate: departureDate?.toISOString().split("T")[0],
-      departureTime,
-      arrivalDate: arrivalDate?.toISOString().split("T")[0],
-      arrivalTime,
-      price,
-      baggagePolicies,
-      layoverTimes,
-      airports,
-      amenities,
-      option: tripOption,
-    };
+  const handleGoClick = async () => {
+    setIsLoading(true); // Start loading
+    try {
+      const flightData = {
+        airline,
+        departureDate: departureDate?.toISOString().split("T")[0] || "",
+        departureTime,
+        arrivalDate: arrivalDate?.toISOString().split("T")[0] || "",
+        arrivalTime,
+        price,
+        baggagePolicies,
+        layoverTimes,
+        airports,
+        amenities,
+        option: tripOption,
+      };
 
-    alert(`Submitted Data:\n\n${JSON.stringify(flightData, null, 2)}`);
+      console.log("Go clicked");
+      const generatedFlights = await generateAirlines(flightData);
+      console.log("generatedFlights: ", generatedFlights);
+      navigate("/airlines", { state: { flights: generatedFlights } });
+    } catch (error) {
+      console.error("Error generating flights:", error);
+    } finally {
+      setIsLoading(false); // Stop loading after API call
+    }
   };
 
   return (
@@ -114,28 +143,21 @@ const InputBar = () => {
             setIsDatePickerVisible(true);
           }}
         >
-          {departureDate ? departureDate.toLocaleDateString() : "Select Departure Date"}
+          {departureDate
+            ? departureDate.toLocaleDateString()
+            : "Select Departure Date"}
         </div>
         {isDatePickerVisible && activeDateField === "departure" && (
           <div ref={calendarRef} className="calendar-container">
             <DatePicker
               selected={departureDate}
-              onChange={(date: Date | null) => handleDateChange(date, "departure")}
+              onChange={(date: Date | null) =>
+                handleDateChange(date, "departure")
+              }
               inline
             />
           </div>
         )}
-      </div>
-
-      {/* Departure Time */}
-      <div className="input-field">
-        <label>Departure Time</label>
-        <input
-          type="text"
-          value={departureTime}
-          onChange={(e) => setDepartureTime(e.target.value)}
-          placeholder="HH:MM AM/PM"
-        />
       </div>
 
       {/* Arrival Date */}
@@ -148,28 +170,21 @@ const InputBar = () => {
             setIsDatePickerVisible(true);
           }}
         >
-          {arrivalDate ? arrivalDate.toLocaleDateString() : "Select Arrival Date"}
+          {arrivalDate
+            ? arrivalDate.toLocaleDateString()
+            : "Select Arrival Date"}
         </div>
         {isDatePickerVisible && activeDateField === "arrival" && (
           <div ref={calendarRef} className="calendar-container">
             <DatePicker
               selected={arrivalDate}
-              onChange={(date: Date | null) => handleDateChange(date, "arrival")}
+              onChange={(date: Date | null) =>
+                handleDateChange(date, "arrival")
+              }
               inline
             />
           </div>
         )}
-      </div>
-
-      {/* Arrival Time */}
-      <div className="input-field">
-        <label>Arrival Time</label>
-        <input
-          type="text"
-          value={arrivalTime}
-          onChange={(e) => setArrivalTime(e.target.value)}
-          placeholder="HH:MM AM/PM"
-        />
       </div>
 
       {/* Price */}
@@ -205,51 +220,13 @@ const InputBar = () => {
         />
       </div>
 
-      {/* Airports */}
-      <div className="input-field">
-        <label>Departure Airport</label>
-        <input
-          type="text"
-          value={airports.departure}
-          onChange={(e) => setAirports({ ...airports, departure: e.target.value })}
-          placeholder="e.g., JFK"
-        />
-      </div>
-      <div className="input-field">
-        <label>Arrival Airport</label>
-        <input
-          type="text"
-          value={airports.arrival}
-          onChange={(e) => setAirports({ ...airports, arrival: e.target.value })}
-          placeholder="e.g., LAX"
-        />
-      </div>
-
-      {/* Amenities */}
-      <div className="input-field">
-        <label>Amenities</label>
-        {amenitiesOptions.map((option) => (
-          <div key={option}>
-            <input
-              type="checkbox"
-              checked={amenities.includes(option)}
-              onChange={(e) => {
-                if (e.target.checked) {
-                  setAmenities([...amenities, option]);
-                } else {
-                  setAmenities(amenities.filter((item) => item !== option));
-                }
-              }}
-            />
-            {option}
-          </div>
-        ))}
-      </div>
-
       {/* Trip Option */}
       <div className="input-field">
         <label>Trip Option</label>
-        <select value={tripOption} onChange={(e) => setTripOption(e.target.value)}>
+        <select
+          value={tripOption}
+          onChange={(e) => setTripOption(e.target.value)}
+        >
           <option value="">Select Trip Type</option>
           {tripOptions.map((option, index) => (
             <option key={index} value={option}>
@@ -260,8 +237,12 @@ const InputBar = () => {
       </div>
 
       {/* Submit Button */}
-      <button className="oval-button" onClick={handleGoClick}>
-        Go
+      <button
+        className="oval-button"
+        onClick={handleGoClick}
+        disabled={isLoading}
+      >
+        {isLoading ? "Loading..." : "Go"}
       </button>
     </div>
   );
