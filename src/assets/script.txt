@@ -1,16 +1,21 @@
-Do you want to book a vacation quickly but are having difficulty finding the best flight?
+Do you want to book a vacation but are having difficulty finding the best flight?
 Well, Better Airlines is here to help. 
-Our tool is designed to automate the process of picking the best flight for your next vacation!
-With Claude implemented inside our app we help you pick the best flights 
+Our tool is designed to automate the process of picking the best flight for your next travel!
+With Claude implemented inside our application, you can feel at ease that you'll find a suitable flight.
 
 how does it work?
-	our site uses Claude to pull flights online and
-	filters them based on user specificed criteria
+	Our site uses Claude to pull flights online and filter them based on user specificed criteria. 
 
-So rather than looking through hundreds of flights yourself, 
-have AI do it for you. Our app is designed to help save you time.
-This is a socially good website as it relates to everyone all around the world
-wanting to travel!
+There are many benefits of using Better Airlines
+	It saves time and money spent by finding some of the best flights currently available.
+	The UI is simple and straightforward.
+	And the AI will search your flights within seconds.
+
+
+why? 
+	Airfares websites are a popular way to buy tickets nowadays
+	However, one can spend a grueiling amount of time scrolling and scrolling through flights to find the most optimal
+	That's why Better Airways was designed to shorten your search time while being effective at finding good flights. 
 
 --------
 home page
@@ -19,7 +24,7 @@ home page
 
 flights page
 	shows 5 best flights
-	star and bell let you favorite and notify for the flights
+	star and bell icons let you favorite and notify for the flights that are close for departure
 	can look up on other airline site to purchase ticket
 
 profile page
