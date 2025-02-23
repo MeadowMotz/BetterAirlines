@@ -1,27 +1,23 @@
-import Airlines from "./airlines";
-import InputBar from "./inputBar";
-import GoogleSignIn from "./googlesignin";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from './authcontext';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const location = useLocation();
+  const userFromState = location.state?.user;
+
+
 
   const handleRedirect = () => {
     navigate('/');
   };
 
-  const style = {
-    backgroundColor: '#f0f0f0', // Change this to your desired color
-    height: '100vh', // Ensure the background color covers the entire viewport
-  };
-
   return (
-    <div style={style}>
-        <GoogleSignIn/>
+    <div>
         <h1>Better Airlines</h1>
         <img onClick={handleRedirect} className="logo" src="src\assets\logo.png" style={{ cursor: 'pointer' }} alt="Better Airlines Logo" />
-        <InputBar/>
-        <Airlines/>
+
     </div>
   );
 };

@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: #BDB1A8;
 }
 
 .logo {
@@ -10,21 +11,6 @@
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
 }
 
 .card {
@@ -37,41 +23,8 @@
 
 .input {
   padding: 20px;
-  gap: 10px;
-  display: flex;
-}
-
-
-.rectangle {
-  width: 100px; 
-  height: 50px;
-  background-color: rgb(35, 215, 104);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  overflow: hidden;
-  white-space: nowrap;
-  padding: 5px;
-}
-
-.input {
-  padding: 20px;
   display: flex;
   gap: 10px; /* Space between rectangles */
-}
-
-.rectangle {
-  width: 150px; 
-  height: 50px;
-  background-color: rgb(35, 215, 104);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  overflow: hidden;
-  white-space: nowrap;
-  padding: 5px;
 }
 
 .rectangle-wrapper {
